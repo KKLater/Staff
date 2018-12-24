@@ -1,0 +1,16 @@
+PODS:
+  - Staff (0.0.1)
+
+DEPENDENCIES:
+  - Staff (from `../`)
+
+EXTERNAL SOURCES:
+  Staff:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Staff: 42ca3cf88a8194af054eea8cd06f402435cb430f
+
+PODFILE CHECKSUM: ea90f59f5e3e7728c81737b6cc09f9f39821febd
+
+COCOAPODS: 1.5.3

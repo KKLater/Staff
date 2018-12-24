@@ -1,0 +1,28 @@
+{
+  "name": "Staff",
+  "version": "0.0.1",
+  "summary": "人人车支付SDK",
+  "description": "人人车支付SDK 接入支付宝支付、微信支付，私有Pod库, 仅仅供内部使用，",
+  "homepage": "https://gitlab.renrenche.com/DQD_IOS_module/RRCPay",
+  "license": "MIT",
+  "authors": {
+    "Later": "luoshuxin@renrenche.com"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source": {
+    "git": "http://gitlab.renrenche.com/DQD_IOS_module/RRCPay.git",
+    "tag": "0.0.1"
+  },
+  "frameworks": [
+    "UIKit",
+    "Foundation"
+  ],
+  "requires_arc": true,
+  "public_header_files": "Staff/*.h",
+  "source_files": "Staff/*.{h,m}",
+  "pod_target_xcconfig": {
+    "OTHER_LDFLAGS": "-all_load"
+  }
+}
