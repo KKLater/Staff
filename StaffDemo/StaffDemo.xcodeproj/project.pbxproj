@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02EF44CDA98B3CBDAD3FAAC5 /* libPods-StaffDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D647902D006E0B04E55945 /* libPods-StaffDemo.a */; };
+		1A15212B21D121550082B4A0 /* TableViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A15212A21D121550082B4A0 /* TableViewViewController.m */; };
 		1AECEDB621D0DB370054F647 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AECEDB521D0DB370054F647 /* AppDelegate.m */; };
 		1AECEDB921D0DB370054F647 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AECEDB821D0DB370054F647 /* ViewController.m */; };
 		1AECEDBC21D0DB370054F647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AECEDBA21D0DB370054F647 /* Main.storyboard */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A15212921D121550082B4A0 /* TableViewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewViewController.h; sourceTree = "<group>"; };
+		1A15212A21D121550082B4A0 /* TableViewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewViewController.m; sourceTree = "<group>"; };
 		1AECEDB121D0DB370054F647 /* StaffDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StaffDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AECEDB421D0DB370054F647 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1AECEDB521D0DB370054F647 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -78,6 +81,8 @@
 				1AECEDB521D0DB370054F647 /* AppDelegate.m */,
 				1AECEDB721D0DB370054F647 /* ViewController.h */,
 				1AECEDB821D0DB370054F647 /* ViewController.m */,
+				1A15212921D121550082B4A0 /* TableViewViewController.h */,
+				1A15212A21D121550082B4A0 /* TableViewViewController.m */,
 				1AECEDBA21D0DB370054F647 /* Main.storyboard */,
 				1AECEDBD21D0DB380054F647 /* Assets.xcassets */,
 				1AECEDBF21D0DB380054F647 /* LaunchScreen.storyboard */,
@@ -189,6 +194,7 @@
 			files = (
 				1AECEDB921D0DB370054F647 /* ViewController.m in Sources */,
 				1AECEDC421D0DB380054F647 /* main.m in Sources */,
+				1A15212B21D121550082B4A0 /* TableViewViewController.m in Sources */,
 				1AECEDB621D0DB370054F647 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

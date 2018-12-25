@@ -13,21 +13,23 @@
 
 @interface Staff ()
 @property (nonatomic, strong) StaffView *staffView;
+@property (nonatomic, strong) NSArray <NSString *> *hookKey;
+
 @end
 
-@interface UIResponder (Category)
-+ (BOOL)_swizzleInstanceMethod:(SEL)originalSelector with:(SEL)newSelector;
+@interface UIWindow (Category)
+- (UIView *)_swizzle_hitTest:(CGPoint)point withEvent:(UIEvent *)event;
 - (void)_swizzle_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-@end
 
-@interface UIViewController (Category)
-+ (BOOL)_swizzleInstanceMethod:(SEL)originalSelector with:(SEL)newSelector;
-- (void)_swizzle_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (UIView *)_swizzle_origin_hook_hitTest:(CGPoint)point withEvent:(UIEvent *)event;
+- (void)_swizzle_origin_hook_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+
 @end
 
 @interface UIControl (Category)
-+ (BOOL)_swizzleInstanceMethod:(SEL)originalSelector with:(SEL)newSelector;
 - (void)_swizzle_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+
+- (void)_swizzle_origin_hook_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 @end
 
 @implementation Staff
@@ -37,6 +39,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         manager = [[Staff alloc] init];
+        manager.hookKey = [NSArray new];
     });
     return manager;
 }
@@ -72,42 +75,12 @@
     [Staff.sharedInstance.staffView swapMain];
 }
 
-- (void)setEnable:(BOOL)enable {
-    _enable = enable;
-    if (enable) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [UIResponder _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:)];
-            [UIViewController _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:)];
-            [UIControl _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:)];
-        });
-    }
-}
-
-@end
-
-
-@implementation UIResponder (Category)
-//+ (void)load {
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        [self _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:)];
-//
-//    });
-//}
-
-- (void)_swizzle_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    if (Staff.sharedInstance.enable) {
-        
-        UITouch *touch = touches.anyObject;
-        UIView *view = touch.view;
-        NSInteger count = [touch tapCount];
-        
-        if ([view isKindOfClass:StaffView.class]) {
-            [self _swizzle_touchesBegan:touches withEvent:event];
-        }
+- (void)_private_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = touches.anyObject;
+    UIView *view = touch.view;
+    NSInteger count = [touch tapCount];
+    if ([view.window isEqual:UIApplication.sharedApplication.keyWindow]) {
         if (![view isKindOfClass:UIWindow.class]) {
-            
             if (count == 1) {
                 [Staff.sharedInstance performSelector:@selector(_private_singleTapActionWithView:) withObject:view afterDelay:0.3];
             }
@@ -116,138 +89,150 @@
                 [NSObject cancelPreviousPerformRequestsWithTarget:Staff.sharedInstance selector:@selector(_private_singleTapActionWithView:) object:view];
                 [Staff.sharedInstance performSelector:@selector(_private_doubleTapActionWithView:) withObject:view afterDelay:0.3];
             }
-        }} else {
-            [self.nextResponder _swizzle_touchesBegan:touches withEvent:event];
         }
+    }
 }
 
+- (void)setEnable:(BOOL)enable {
+    _enable  =enable;
+    if (_enable) {
 
-+ (BOOL)_swizzleInstanceMethod:(SEL)originalSelector with:(SEL)newSelector {
-    Method originalMethod = class_getInstanceMethod(self, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(self, newSelector);
-    BOOL didAddMethod =
-    class_addMethod(self,
-                    originalSelector,
-                    method_getImplementation(swizzledMethod),
-                    method_getTypeEncoding(swizzledMethod));
-    
-    if (didAddMethod) {
-        class_replaceMethod(self,
-                            newSelector,
-                            method_getImplementation(originalMethod),
-                            method_getTypeEncoding(originalMethod));
+        
+        [Staff _swizzleInstanceMethod:@selector(hitTest:withEvent:) with:@selector(_swizzle_hitTest:withEvent:) saveSelector:@selector(_swizzle_origin_hook_hitTest:withEvent:) forClass:UIWindow.class];
+        [Staff _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:) saveSelector:@selector(_swizzle_origin_hook_touchesBegan:withEvent:) forClass:UIWindow.class];
+        [Staff _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:) saveSelector:@selector(_swizzle_origin_hook_touchesBegan:withEvent:) forClass:UIControl.class];
+
+
     } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
+        [Staff _swizzle_resetInstanceMethod:@selector(hitTest:withEvent:) with:@selector(_swizzle_hitTest:withEvent:) saveSelector:@selector(_swizzle_origin_hook_hitTest:withEvent:) forClass:UIWindow.class];
+        [Staff _swizzle_resetInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:) saveSelector:@selector(_swizzle_origin_hook_touchesBegan:withEvent:) forClass:UIWindow.class];
+        [Staff _swizzle_resetInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:) saveSelector:@selector(_swizzle_origin_hook_touchesBegan:withEvent:) forClass:UIControl.class];
+        [self.staffView cleanStaffItemViews];
     }
-    return YES;
+    
+}
+
++ (void)_swizzleInstanceMethod:(SEL)originalSelector with:(SEL)newSelector saveSelector:(SEL)saveSelector forClass:(Class)class {
+    NSString *key = [NSString stringWithFormat:@"%@-%@", NSStringFromClass(class), NSStringFromSelector(originalSelector)];
+    if ([Staff.sharedInstance.hookKey containsObject:key]) {
+        return;
+    }
+    Method originalMethod = class_getInstanceMethod(class, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(class, newSelector);
+    Method saveMethod = class_getInstanceMethod(class, saveSelector);
+    if (!originalMethod || !swizzledMethod || !saveMethod) {
+        return;
+    }
+    method_exchangeImplementations(originalMethod, saveMethod);
+    method_exchangeImplementations(originalMethod, swizzledMethod);
+    NSMutableArray *keys = Staff.sharedInstance.hookKey.mutableCopy;
+    [keys addObject:key];
+    Staff.sharedInstance.hookKey = keys.copy;
+}
+
++ (void)_swizzle_resetInstanceMethod:(SEL)originalSelector with:(SEL)newSelector saveSelector:(SEL)saveSelector forClass:(Class)class  {
+    NSString *key = [NSString stringWithFormat:@"%@-%@", NSStringFromClass(class), NSStringFromSelector(originalSelector)];
+    if (![Staff.sharedInstance.hookKey containsObject:key]) {
+        return;
+    }
+    Method originalMethod = class_getInstanceMethod(class, originalSelector);
+    Method swizzledMethod = class_getInstanceMethod(class, newSelector);
+    Method saveMethod = class_getInstanceMethod(class, saveSelector);
+    if (!originalMethod || !swizzledMethod || !saveMethod) {
+        return;
+    }
+    method_exchangeImplementations(originalMethod, saveMethod);
+    method_exchangeImplementations(swizzledMethod, saveMethod);
+    NSMutableArray *keys = Staff.sharedInstance.hookKey.mutableCopy;
+    [keys removeObject:key];
+    Staff.sharedInstance.hookKey = keys.copy;
 }
 @end
 
-@implementation UIViewController (Category)
-//+ (void)load {
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        [self _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:)];
-//    });
-//}
+@implementation UIApplication (Category)
 
+@end
+
+@implementation UIWindow (Category)
+
+- (UIView *)_swizzle_hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if (Staff.sharedInstance.enable) {
+        
+        if ([self isEqual:UIApplication.sharedApplication.keyWindow]) {
+            if ([self.layer hitTest:point]) {
+                UIView *view = [self fiterView:self forHitTestPoint:point];
+                if (view) {
+                    if ([view isKindOfClass:StaffView.class]) {
+                        return nil;
+                    }
+                    if ([view isKindOfClass:UIWindow.class]) {
+                        
+                        
+                        return nil;
+                        
+                    }
+
+                    return view;
+                }
+            }
+        }
+        return nil;
+        
+    }
+    return [self _swizzle_hitTest:point withEvent:event];
+}
+
+- (UIView *)fiterView:(UIView *)view forHitTestPoint:(CGPoint)point {
+    if (Staff.sharedInstance.enable) {
+        
+        CGPoint locationPoint = [[UIApplication sharedApplication].keyWindow convertPoint:point toView:view.superview];
+        
+        if ([view.layer hitTest:locationPoint]) {
+            for (UIView *aview in view.subviews) {
+                UIView *tempView = [self fiterView:aview forHitTestPoint:point];
+                if (tempView) {
+                    return tempView;
+                }
+            }
+            return view;
+        }
+    }
+    return nil;
+}
+//
 - (void)_swizzle_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if (Staff.sharedInstance.enable) {
-        UITouch *touch = touches.anyObject;
-        UIView *view = touch.view;
-        NSInteger count = [touch tapCount];
-        if ([view isKindOfClass:StaffView.class]) {
-            return;
-        }
-        if (![view isKindOfClass:UIWindow.class]) {
-            
-            if (count == 1) {
-                [Staff.sharedInstance performSelector:@selector(_private_singleTapActionWithView:) withObject:view afterDelay:0.3];
-            }
-            if (count == 2) {
-                //取消单击
-                [NSObject cancelPreviousPerformRequestsWithTarget:Staff.sharedInstance selector:@selector(_private_singleTapActionWithView:) object:view];
-                [Staff.sharedInstance _private_doubleTapActionWithView:view];
-            }
-        }
-    }else {
-        [self _swizzle_touchesBegan:touches withEvent:event];
+
+        [Staff.sharedInstance _private_touchesBegan:touches withEvent:event];
+
     }
 }
 
-+ (BOOL)_swizzleInstanceMethod:(SEL)originalSelector with:(SEL)newSelector {
-    Method originalMethod = class_getInstanceMethod(self, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(self, newSelector);
-    BOOL didAddMethod =
-    class_addMethod(self,
-                    originalSelector,
-                    method_getImplementation(swizzledMethod),
-                    method_getTypeEncoding(swizzledMethod));
-    
-    if (didAddMethod) {
-        class_replaceMethod(self,
-                            newSelector,
-                            method_getImplementation(originalMethod),
-                            method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
-    return YES;
+- (UIView *)_swizzle_origin_hook_hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    return nil;
 }
+- (void)_swizzle_origin_hook_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+}
+
+
+
+
 @end
 
 @implementation UIControl (Category)
-//+ (void)load {
-//    static dispatch_once_t onceToken;
-//    dispatch_once(&onceToken, ^{
-//        [self _swizzleInstanceMethod:@selector(touchesBegan:withEvent:) with:@selector(_swizzle_touchesBegan:withEvent:)];
-//    });
-//}
-
 
 - (void)_swizzle_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     if (Staff.sharedInstance.enable) {
-        UITouch *touch = touches.anyObject;
-        UIView *view = touch.view;
-        NSInteger count = [touch tapCount];
         
-        if ([view isKindOfClass:StaffView.class]) {
-            return;
-        }
-        if (![view isKindOfClass:UIWindow.class]) {
-            
-            if (count == 1) {
-                [Staff.sharedInstance performSelector:@selector(_private_singleTapActionWithView:) withObject:view afterDelay:0.3];
-            }
-            if (count == 2) {
-                //取消单击
-                [NSObject cancelPreviousPerformRequestsWithTarget:Staff.sharedInstance selector:@selector(_private_singleTapActionWithView:) object:view];
-                [Staff.sharedInstance _private_doubleTapActionWithView:view];
-            }
-        }
-    }  else {
-        [self _swizzle_touchesBegan:touches withEvent:event];
+        [Staff.sharedInstance _private_touchesBegan:touches withEvent:event];
+        
     }
 }
 
-+ (BOOL)_swizzleInstanceMethod:(SEL)originalSelector with:(SEL)newSelector {
-    Method originalMethod = class_getInstanceMethod(self, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(self, newSelector);
-    BOOL didAddMethod =
-    class_addMethod(self,
-                    originalSelector,
-                    method_getImplementation(swizzledMethod),
-                    method_getTypeEncoding(swizzledMethod));
+
+- (void)_swizzle_origin_hook_touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    if (didAddMethod) {
-        class_replaceMethod(self,
-                            newSelector,
-                            method_getImplementation(originalMethod),
-                            method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
-    return YES;
 }
 
 @end

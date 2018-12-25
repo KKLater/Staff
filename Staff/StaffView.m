@@ -203,7 +203,7 @@
     return self.contentViews.count;
 }
 
-- (void)cleanCoverdViews {
+- (void)cleanStaffItemViews {
     self.contentViews = [NSArray new];
     [self refrestCoverViews];
     
@@ -251,6 +251,7 @@
         [[UIApplication sharedApplication].keyWindow addSubview:self];
         [self setNeedsLayout];
         [self layoutIfNeeded];
+   
     } else {
         self.mainItemView.contentView = nil;
         self.referenceItemView.contentView = nil;
@@ -282,6 +283,13 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.frame = self.superview.bounds;
+    CGFloat main  = CGRectGetWidth(self.mainItemView.frame) * CGRectGetHeight(self.mainItemView.frame);
+    CGFloat refrence = CGRectGetWidth(self.referenceItemView.frame) * CGRectGetHeight(self.referenceItemView.frame);
+    if (main < refrence) {
+        [self sendSubviewToBack:self.referenceItemView];
+    } else {
+        [self sendSubviewToBack:self.mainItemView];
+    }
     if (self.staffItemViewsCount > 0) {
         CGFloat minFirstX = CGRectGetMinX(self.mainItemView.frame);
         CGFloat maxFirstX = CGRectGetMaxX(self.mainItemView.frame);
@@ -358,7 +366,7 @@
                     CGFloat rightReferenceLineLength = centerFirstY -  minSecondY + 24;
                     
                     self.leftReferenceLine.frame = CGRectMake(minSecondX + 1, minSecondY - 10, 1, leftReferenceLineLength);
-                    self.rightReferenceLine.frame = CGRectMake(maxSecondX, minSecondX - 10, 1, rightReferenceLineLength);
+                    self.rightReferenceLine.frame = CGRectMake(maxSecondX, minSecondY - 10, 1, rightReferenceLineLength);
                     
                 } else if (minSecondY > centerFirstY) {
                     CGFloat leftReferenceLineLength = maxSecondY - centerFirstY + 24;
