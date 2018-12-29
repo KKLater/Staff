@@ -1,5 +1,5 @@
 
 target 'StaffDemo' do
- pod 'Staff', :path => '../'
+    pod 'Staff', :path => '../'
 
 end

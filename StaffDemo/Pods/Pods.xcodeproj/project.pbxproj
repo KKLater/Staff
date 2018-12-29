@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		128A8A963DF47187380FBF3F1A789BFD /* StaffLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAF6CB1C4526084A83F65E7B85D4AA4 /* StaffLineView.m */; };
 		17A11ADB35527B4A8B5790AE56B37383 /* StaffModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FC71174D6569C1F454E06352A802B63 /* StaffModel.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		1A17C3B321D7C05A00B0A1EF /* StaffItemView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A17C3B121D7C05A00B0A1EF /* StaffItemView.h */; };
+		1A17C3B421D7C05A00B0A1EF /* StaffItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A17C3B221D7C05A00B0A1EF /* StaffItemView.m */; };
 		1B65E6EF349F535B846CFE9B9E960C1E /* StaffContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FBF3874074CA30E90182A39EE86FFD /* StaffContentView.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		1B7FF69FDD4D54584F073A6FE96298BA /* Staff.h in Headers */ = {isa = PBXBuildFile; fileRef = 9849AC1C4ED22C0E7F954F4614B9D90E /* Staff.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		288C1A4628F13CB5196D71F0A48D38FD /* StaffDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 54C17C80AB70FFC2CD7EEABDDF5F7010 /* StaffDetailView.m */; };
@@ -39,7 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		11203D31F6EB4F53B8D20AFB72EA21D8 /* Staff.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = Staff.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		11203D31F6EB4F53B8D20AFB72EA21D8 /* Staff.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = Staff.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		1A17C3B121D7C05A00B0A1EF /* StaffItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StaffItemView.h; path = Staff/StaffItemView.h; sourceTree = "<group>"; };
+		1A17C3B221D7C05A00B0A1EF /* StaffItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = StaffItemView.m; path = Staff/StaffItemView.m; sourceTree = "<group>"; };
 		1E125A7B5130D13BBEFD43FB49E6E83F /* Staff-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Staff-prefix.pch"; sourceTree = "<group>"; };
 		3E3E97D7269B6EFA8087440204606599 /* Staff-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Staff-dummy.m"; sourceTree = "<group>"; };
 		525678283F32B2DDF9C6C2A154F67372 /* StaffContentView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = StaffContentView.m; path = Staff/StaffContentView.m; sourceTree = "<group>"; };
@@ -52,18 +56,18 @@
 		888E9EB508E948EED3CA0337AC8BADD8 /* StaffLineView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = StaffLineView.h; path = Staff/StaffLineView.h; sourceTree = "<group>"; };
 		8F69B0B6CE8F913279ECFB5028927C2E /* StaffModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = StaffModel.m; path = Staff/StaffModel.m; sourceTree = "<group>"; };
 		908E902E026C5C22904CF9014A5604AD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9849AC1C4ED22C0E7F954F4614B9D90E /* Staff.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Staff.h; path = Staff/Staff.h; sourceTree = "<group>"; };
 		9B39A81B65DAE16E5353FDC40811272B /* Pods-StaffDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-StaffDemo-resources.sh"; sourceTree = "<group>"; };
 		AAE06B870B64513569381C56CEED345E /* StaffPrivate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = StaffPrivate.h; path = Staff/StaffPrivate.h; sourceTree = "<group>"; };
-		B138B69E56A8B82D8DDC3DA7A94D6AA5 /* libStaff.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libStaff.a; path = libStaff.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B138B69E56A8B82D8DDC3DA7A94D6AA5 /* libStaff.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaff.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1861D429F3BF272FA28569E8DE0C98A /* Staff.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Staff.xcconfig; sourceTree = "<group>"; };
 		BAE06EDFC52F93641E764418F801E0C0 /* Staff.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Staff.m; path = Staff/Staff.m; sourceTree = "<group>"; };
 		BC2C02191C153C1554B35DEE8B2D09D4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		BC657AE0CD5A552DB9C430274381A5A6 /* StaffViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = StaffViewController.m; path = Staff/StaffViewController.m; sourceTree = "<group>"; };
 		CDAF6CB1C4526084A83F65E7B85D4AA4 /* StaffLineView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = StaffLineView.m; path = Staff/StaffLineView.m; sourceTree = "<group>"; };
-		D03FDD007D9D249A74A034F53495379F /* libPods-StaffDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-StaffDemo.a"; path = "libPods-StaffDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D464D8E0F30C505B006D73D1B496BDA0 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		D03FDD007D9D249A74A034F53495379F /* libPods-StaffDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StaffDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D464D8E0F30C505B006D73D1B496BDA0 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		EC63CB077ECBF780536351364DA8B830 /* StaffViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = StaffViewController.h; path = Staff/StaffViewController.h; sourceTree = "<group>"; };
 		F6D1EDFEC02FA7A1077DD2D37891156C /* StaffPrivate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = StaffPrivate.m; path = Staff/StaffPrivate.m; sourceTree = "<group>"; };
 		F822281C606C0430D2A54572058510AE /* Pods-StaffDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StaffDemo-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -115,6 +119,8 @@
 				CDAF6CB1C4526084A83F65E7B85D4AA4 /* StaffLineView.m */,
 				5FC71174D6569C1F454E06352A802B63 /* StaffModel.h */,
 				8F69B0B6CE8F913279ECFB5028927C2E /* StaffModel.m */,
+				1A17C3B121D7C05A00B0A1EF /* StaffItemView.h */,
+				1A17C3B221D7C05A00B0A1EF /* StaffItemView.m */,
 				AAE06B870B64513569381C56CEED345E /* StaffPrivate.h */,
 				F6D1EDFEC02FA7A1077DD2D37891156C /* StaffPrivate.m */,
 				EC63CB077ECBF780536351364DA8B830 /* StaffViewController.h */,
@@ -218,6 +224,7 @@
 				7CDB580B52E2B8F69FC7ABD917A550EF /* StaffDetailView.h in Headers */,
 				EA5FB4ABE2B8A2AAF87CE460B390EFDC /* StaffLineView.h in Headers */,
 				17A11ADB35527B4A8B5790AE56B37383 /* StaffModel.h in Headers */,
+				1A17C3B321D7C05A00B0A1EF /* StaffItemView.h in Headers */,
 				DF46FF58769BD2628CE8166CBEC9C86B /* StaffPrivate.h in Headers */,
 				775206C22EC794B4EA0C92060AECDE15 /* StaffViewController+PrivateExtension.h in Headers */,
 				297A7C80A6B4023E780038EED86BEF36 /* StaffViewController.h in Headers */,
@@ -298,6 +305,7 @@
 				7901401C98F85C5942BE98B2A02C1C1B /* StaffContentView.m in Sources */,
 				288C1A4628F13CB5196D71F0A48D38FD /* StaffDetailView.m in Sources */,
 				128A8A963DF47187380FBF3F1A789BFD /* StaffLineView.m in Sources */,
+				1A17C3B421D7C05A00B0A1EF /* StaffItemView.m in Sources */,
 				40D77C246594DD2B44185CD57B708624 /* StaffModel.m in Sources */,
 				AC73EB0D950C0F0DBD79F50DB9B5CBDE /* StaffPrivate.m in Sources */,
 				A1AF87FD5842335C1D4716D864E8C692 /* StaffViewController.m in Sources */,
