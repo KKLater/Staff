@@ -57,8 +57,6 @@
         case StaffLineViewTypeSpace:
         {
             if (CGRectGetWidth(self.bounds) >= CGRectGetHeight(self.bounds)) {
-                
-                
                 self.lineLayer.frame = CGRectMake(0, CGRectGetHeight(self.bounds) / 2.0, CGRectGetWidth(self.bounds), 1);
                 self.beginLayer.frame = CGRectMake(0, CGRectGetHeight(self.bounds) / 2.0 - 5, 1, 10);
                 self.endLayer.frame = CGRectMake(CGRectGetWidth(self.bounds) - 1, CGRectGetHeight(self.bounds) / 2.0 - 5, 1, 10);
@@ -73,16 +71,19 @@
             break;
         case StaffLineViewTypeReference:
         {
+            
             [self.referenceLine removeFromSuperlayer];
             _referenceLine = nil;
-            if (CGRectGetWidth(self.bounds) > CGRectGetHeight(self.bounds)) {
-                self.referenceLine = [self configReferenceLineVertical:NO];
-                [self.layer addSublayer:self.referenceLine];
-            } else {
-                self.referenceLine = [self configReferenceLineVertical:YES];
-                [self.layer addSublayer:self.referenceLine];
+            if (!CGRectEqualToRect(self.frame, CGRectZero)) {
+                
+                if (CGRectGetWidth(self.bounds) > CGRectGetHeight(self.bounds)) {
+                    self.referenceLine = [self configReferenceLineVertical:NO];
+                    [self.layer addSublayer:self.referenceLine];
+                } else {
+                    self.referenceLine = [self configReferenceLineVertical:YES];
+                    [self.layer addSublayer:self.referenceLine];
+                }
             }
-            
             
         }
             break;
@@ -92,9 +93,8 @@
     }
 }
 
-
-- (void)setPosition:(StaffLineViewDataPosition)position {
-    _position = position;
+- (void)showLength:(CGFloat)length atPosition:(StaffLineViewDataPosition)position {
+    self.position = position;
     NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
     numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
     numberFormatter.maximumFractionDigits = 2;
@@ -103,28 +103,28 @@
         case StaffLineViewDataPositionTop:
         {
             
-            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(CGRectGetWidth(self.bounds))]];
+            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(length)]];
             CGSize labelSize = [self sizeForLabel:self.lenthLabel size:CGSizeMake(MAXFLOAT, 12)];
             self.lenthLabel.frame = CGRectMake(CGRectGetWidth(self.bounds) / 2.0 - labelSize.width / 2.0, -14, labelSize.width, 12);
         }
             break;
         case StaffLineViewDataPositionLeft:
         {
-            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(CGRectGetHeight(self.bounds))]];
+            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(length)]];
             CGSize labelSize = [self sizeForLabel:self.lenthLabel size:CGSizeMake(MAXFLOAT, 12)];
             self.lenthLabel.frame = CGRectMake(-labelSize.width - 2, CGRectGetHeight(self.bounds) / 2.0 - 6, labelSize.width, 12);
         }
             break;
         case StaffLineViewDataPositionRight:
         {
-            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(CGRectGetHeight(self.bounds))]];
+            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(length)]];
             CGSize labelSize = [self sizeForLabel:self.lenthLabel size:CGSizeMake(MAXFLOAT, 12)];
             self.lenthLabel.frame = CGRectMake(CGRectGetWidth(self.bounds) + 2 , CGRectGetHeight(self.bounds) / 2.0 - 6, labelSize.width, 12);
         }
             break;
         case StaffLineViewDataPositionBottom:
         {
-            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(CGRectGetWidth(self.bounds))]];
+            self.lenthLabel.text = [NSString stringWithFormat:@"%@", [numberFormatter stringFromNumber:@(length)]];
             CGSize labelSize = [self sizeForLabel:self.lenthLabel size:CGSizeMake(MAXFLOAT, 12)];
             self.lenthLabel.frame = CGRectMake(CGRectGetWidth(self.bounds) /2.0 - labelSize.width / 2.0, CGRectGetHeight(self.bounds) + 2, labelSize.width, 12);
         }
@@ -153,6 +153,8 @@
             break;
     }
 }
+
+
 - (CGSize)sizeForLabel:(UILabel *)label size:(CGSize)size{
     // 计算大小
     CGSize labelSize = [label.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName : label.font } context:nil].size;

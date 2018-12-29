@@ -22,14 +22,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    Staff.sharedInstance.enable = YES;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        Staff.sharedInstance.enable = NO;
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            Staff.sharedInstance.enable = YES;
-//        });
-//    });
-
+    Staff.sharedInstance.enable = YES;
 }
 
 - (IBAction)showTableView:(id)sender {

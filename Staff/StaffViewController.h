@@ -1,5 +1,5 @@
 //
-//  StaffView.h
+//  StaffViewController.h
 //  StaffDemo
 //
 //  Created by 罗树新 on 2018/12/24.
@@ -12,9 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface StaffItemView : UIView
 
+@property (nonatomic, assign, getter=isMain) BOOL main;
+@property (nonatomic, assign) CGFloat scale;
+
 @end
 
-@interface StaffView : UIView
+@interface StaffViewController : UIViewController
 
 @end
 

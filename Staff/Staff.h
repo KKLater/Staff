@@ -6,13 +6,20 @@
 //  Copyright © 2018 罗树新. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+@class StaffViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Staff : NSObject
+
 + (instancetype)sharedInstance;
+@property (nonatomic, strong, readonly) StaffViewController *staffViewController;
+@property (nonatomic, strong, readonly) UIWindow *staffWindow;
+@property (nonatomic, strong, readonly) UIWindow *previousKeyWindow;
 @property (nonatomic, assign) BOOL enable;
+
 @end
 
 NS_ASSUME_NONNULL_END

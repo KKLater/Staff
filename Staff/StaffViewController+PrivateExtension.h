@@ -1,20 +1,19 @@
 //
-//  StaffView+PrivateExtension.h
+//  StaffViewController+PrivateExtension.h
 //  StaffDemo
 //
 //  Created by 罗树新 on 2018/12/24.
 //  Copyright © 2018 罗树新. All rights reserved.
 //
 
-#import "StaffView.h"
-#import "Staff.h"
+#import "StaffViewController.h"
+//#import "Staff.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface StaffView ()
+@interface StaffViewController ()
 
 - (void)showStaffItemViewOnView:(UIView *)view;
-- (BOOL)hasSelectedView:(UIView *)view;
 - (void)swapMain;
 - (void)cleanStaffItemViews;
 

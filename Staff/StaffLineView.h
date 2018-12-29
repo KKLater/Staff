@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, StaffLineViewDataPosition) {
 
 @property (nonatomic, strong) UIColor *themeColor;
 + (StaffLineView *)lineWithType:(StaffLineViewType)type;
+- (void)showLength:(CGFloat)length atPosition:(StaffLineViewDataPosition)position;
 @property (nonatomic, assign) StaffLineViewDataPosition position;
 
 @end
