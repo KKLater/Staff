@@ -39,6 +39,7 @@
         
         [self.staffViewController cleanStaffItemViews];
         [self.previousKeyWindow makeKeyAndVisible];
+        self.staffWindow = nil;
     }
     
 }

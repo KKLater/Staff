@@ -22,7 +22,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    Staff.sharedInstance.enable = YES;
 }
 
 - (IBAction)showTableView:(id)sender {
@@ -30,4 +29,11 @@
     [self presentViewController:tabViewVC animated:YES completion:nil];
 }
 
+
+@end
+
+@implementation UIViewController (motion)
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    Staff.sharedInstance.enable = !Staff.sharedInstance.enable;
+}
 @end
