@@ -93,7 +93,7 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
-        _titleLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
+        _titleLabel.font = [UIFont boldSystemFontOfSize:14];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _titleLabel;
@@ -103,7 +103,7 @@
     if (!_classNameButton) {
         _classNameButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_classNameButton setTitleColor:[[UIColor alloc] initWithWhite:0 alpha:0.8] forState:UIControlStateNormal];
-        _classNameButton.titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+        _classNameButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         _classNameButton.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         _classNameButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     }
@@ -114,7 +114,7 @@
     if (!_superClassNameButton) {
         _superClassNameButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_superClassNameButton setTitleColor:[[UIColor alloc] initWithWhite:0 alpha:0.4] forState:UIControlStateNormal];
-        _superClassNameButton.titleLabel.font = [UIFont systemFontOfSize:16 weight:UIFontWeightMedium];
+        _superClassNameButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         _superClassNameButton.titleLabel.textAlignment = NSTextAlignmentLeft;
         
         [_superClassNameButton addTarget:self action:@selector(superClassNameButtonAction:) forControlEvents:UIControlEventTouchUpInside];

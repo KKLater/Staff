@@ -62,7 +62,7 @@
     if (!_classNameLabel) {
         _classNameLabel = [[UILabel alloc] init];
         _classNameLabel.textColor = [[UIColor alloc] initWithWhite:0 alpha:0.8];
-        _classNameLabel.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
+        _classNameLabel.font = [UIFont boldSystemFontOfSize:14];
         _classNameLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _classNameLabel;
