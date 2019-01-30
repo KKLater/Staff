@@ -2,7 +2,7 @@
 
 说说最近做的东西，Staff，就是下面这个东西。
 
-![image.png](https://upload-images.jianshu.io/upload_images/312211-27d7c1ad75d663d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/620)
+![image.png](https://upload-images.jianshu.io/upload_images/312211-27d7c1ad75d663d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310)
 
 功能很简单。在项目运行期间，点击选择不同的视图，并标注出视图之间的布局关系。
 
