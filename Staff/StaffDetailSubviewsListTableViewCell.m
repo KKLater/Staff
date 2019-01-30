@@ -6,6 +6,7 @@
 //
 
 #import "StaffDetailSubviewsListTableViewCell.h"
+#import "StaffPrivate.h"
 
 @interface StaffDetailSubviewsListTableViewCell ()
 @property (nonatomic, strong) UILabel *classNameLabel;
@@ -41,7 +42,12 @@
     _view = view;
     if (view) {
         self.classNameLabel.text = NSStringFromClass(view.class);
-        self.frameInfoLabel.text = [NSString stringWithFormat:@"Frame: (%.2f, %.2f; %.2f, %.2f)", CGRectGetMinX(view.frame), CGRectGetMinY(view.frame), CGRectGetWidth(view.frame), CGRectGetHeight(view.frame)];
+        NSString *xString = [StaffPrivate formatedNumberString:@(CGRectGetMinX(view.frame))];
+        NSString *yString = [StaffPrivate formatedNumberString:@(CGRectGetMinY(view.frame))];
+        NSString *widthString = [StaffPrivate formatedNumberString:@(CGRectGetWidth(view.frame))];
+        NSString *heightString = [StaffPrivate formatedNumberString:@(CGRectGetHeight(view.frame))];
+
+        self.frameInfoLabel.text = [NSString stringWithFormat:@"Frame: (%@, %@; %@, %@)", xString, yString, widthString, heightString];
         self.moreInfoLabel.text = [NSString stringWithFormat:@"Hidden: %@, Alpha: %.2f", view.isHidden? @"Yes" : @"No", view.alpha];
     } else {
         self.classNameLabel.text = @"";
@@ -81,4 +87,7 @@
     }
     return _moreInfoLabel;
 }
+
+
+
 @end

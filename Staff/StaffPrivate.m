@@ -73,4 +73,18 @@
     return subviewsAtPoint;
 }
 
+
++ (NSNumberFormatter *)numberFormatter {
+    NSNumberFormatter *numberFormatter = [NSNumberFormatter new];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    numberFormatter.maximumFractionDigits = 2;
+    return numberFormatter;
+}
+
++ (NSString *)formatedNumberString:(NSNumber *)number {
+    NSNumberFormatter *formatter = [self numberFormatter];
+    NSString *numberString = [formatter stringFromNumber:number];
+    return numberString;
+}
+
 @end

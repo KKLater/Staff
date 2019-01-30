@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)private_singleTapActionWithView:(UIView *)view;
 + (void)private_doubleTapAction;
++ (NSNumberFormatter *)numberFormatter;
++ (NSString *)formatedNumberString:(NSNumber *)number;
 @end
 
 NS_ASSUME_NONNULL_END
