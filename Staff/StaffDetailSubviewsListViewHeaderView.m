@@ -22,7 +22,6 @@
         [self addSubview:self.superClassNameButton];
         [self addSubview:self.classNameButton];
         [self addSubview:self.bottomLineView];
-
     }
     return self;
 }
@@ -31,15 +30,15 @@
     [super layoutSubviews];
     [self.superClassNameButton sizeToFit];
     [self.classNameButton sizeToFit];
-    self.titleLabel.frame = CGRectMake(10, 5, CGRectGetWidth(self.bounds) - 20, 30);
+    self.titleLabel.frame = CGRectMake(10, 10, CGRectGetWidth(self.bounds) - 20, 16);
     
     if (self.view) {
         if (self.view.superview) {
-            self.superClassNameButton.frame = CGRectMake(10, CGRectGetMaxY(self.titleLabel.frame) + 5, CGRectGetWidth(self.superClassNameButton.frame), 30);
+            self.superClassNameButton.frame = CGRectMake(10, CGRectGetMaxY(self.titleLabel.frame) + 3, CGRectGetWidth(self.superClassNameButton.frame), CGRectGetHeight(self.superClassNameButton.frame));
         } else {
             self.superClassNameButton.frame = CGRectZero;
         }
-        self.classNameButton.frame = CGRectMake(CGRectGetMaxX(self.superClassNameButton.frame) + 5, CGRectGetMaxY(self.titleLabel.frame) + 5, MIN(CGRectGetWidth(self.frame) - CGRectGetMaxX(self.superClassNameButton.frame) - 10, CGRectGetWidth(self.classNameButton.frame)), 30);
+        self.classNameButton.frame = CGRectMake(CGRectGetMaxX(self.superClassNameButton.frame) + 5, CGRectGetMaxY(self.titleLabel.frame) + 3, MIN(CGRectGetWidth(self.frame) - CGRectGetMaxX(self.superClassNameButton.frame) - 10, CGRectGetWidth(self.classNameButton.frame)), CGRectGetHeight(self.classNameButton.frame));
     } else {
         self.superClassNameButton.frame = CGRectZero;
         self.classNameButton.frame = CGRectZero;
