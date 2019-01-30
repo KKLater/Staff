@@ -157,11 +157,11 @@
         _subViewsListView.sectionHeaderHeight = 75;
         _subViewsListView.rowHeight = 80;
         _subViewsListView.layer.cornerRadius = 4;
-        _subViewsListView.clipsToBounds = NO;
         _subViewsListView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.4].CGColor;
         _subViewsListView.layer.shadowOpacity = 0.5;
         _subViewsListView.layer.shadowRadius = 4;
-        _subViewsListView.layer.shadowOffset = CGSizeMake(0, 0);        
+        _subViewsListView.layer.shadowOffset = CGSizeMake(0, 0);
+        _subViewsListView.clipsToBounds = NO;
         _subViewsListView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, -20);
         self.tableHeaderView.frame = CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen.bounds) - 40, CGRectGetHeight(UIScreen.mainScreen.bounds) - 80);
         _subViewsListView.tableHeaderView = self.tableHeaderView;
