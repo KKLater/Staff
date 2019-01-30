@@ -20,6 +20,7 @@
         [self.contentView addSubview:self.classNameLabel];
         [self.contentView addSubview:self.frameInfoLabel];
         [self.contentView addSubview:self.moreInfoLabel];
+
     }
     return self;
 }

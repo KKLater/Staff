@@ -22,6 +22,7 @@
         [self addSubview:self.superClassNameButton];
         [self addSubview:self.classNameButton];
         [self addSubview:self.bottomLineView];
+
     }
     return self;
 }
