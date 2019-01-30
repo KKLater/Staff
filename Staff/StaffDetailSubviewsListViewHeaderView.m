@@ -38,7 +38,7 @@
         } else {
             self.superClassNameButton.frame = CGRectZero;
         }
-        self.classNameButton.frame = CGRectMake(CGRectGetMaxX(self.superClassNameButton.frame) + 5, CGRectGetMaxY(self.titleLabel.frame) + 3, MIN(CGRectGetWidth(self.frame) - CGRectGetMaxX(self.superClassNameButton.frame) - 10, CGRectGetWidth(self.classNameButton.frame)), CGRectGetHeight(self.classNameButton.frame));
+        self.classNameButton.frame = CGRectMake(CGRectGetMaxX(self.superClassNameButton.frame) + 5, CGRectGetMaxY(self.titleLabel.frame) + 3, MIN(CGRectGetWidth(self.frame) - CGRectGetMaxX(self.superClassNameButton.frame) - 25, CGRectGetWidth(self.classNameButton.frame)), CGRectGetHeight(self.classNameButton.frame));
     } else {
         self.superClassNameButton.frame = CGRectZero;
         self.classNameButton.frame = CGRectZero;
