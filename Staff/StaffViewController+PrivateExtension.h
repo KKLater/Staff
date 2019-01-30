@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showStaffItemViewOnView:(UIView *)view;
 - (void)swapMain;
 - (void)cleanStaffItemViews;
+- (void)showStaffItemViewOnView:(UIView *)view isMain:(BOOL)isMain;
 
 @property (nonatomic, assign) NSInteger staffItemViewsCount;
 @end

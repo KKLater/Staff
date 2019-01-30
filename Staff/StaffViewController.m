@@ -16,13 +16,10 @@
 @property (nonatomic, strong) NSArray *contentViews;
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapGestureRecognizer;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTapGestureRecognizer;
-@property (nonatomic, strong) UITapGestureRecognizer *thirdTapGestureRecognizer;
-
+@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *rightEdgePanGestureRecognizer;
+@property (nonatomic, strong) UIPanGestureRecognizer *detailViewPanGestureRecognizer;
 @property (nonatomic, strong) StaffDetailView *detailView;
-
-
 @property (nonatomic, strong) StaffContentView *contentView;
-
 
 @end
 
@@ -31,12 +28,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.contentView];
     self.contentView.frame = UIScreen.mainScreen.bounds;
+    [self.view addSubview:self.contentView];
+    [self.view addSubview:self.detailView];
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
     [self.view addGestureRecognizer:self.doubleTapGestureRecognizer];
-    [self.view addGestureRecognizer:self.thirdTapGestureRecognizer];
-    [self.view addSubview:self.detailView];
+    [self.view addGestureRecognizer:self.rightEdgePanGestureRecognizer];
+    [self.detailView addGestureRecognizer:self.detailViewPanGestureRecognizer];
     self.detailView.hidden = YES;
 }
 
@@ -66,6 +64,41 @@
         }
     }
     
+    self.contentViews = mutableContentViews.copy;
+    [self refrestCoverViews];
+}
+
+- (void)showStaffItemViewOnView:(UIView *)view isMain:(BOOL)isMain {
+    if (view == nil) {
+        return;
+    }
+    
+    NSMutableArray *mutableContentViews = [[NSMutableArray alloc] init];
+
+    if ([self.contentViews containsObject:view]) {
+        // 已经包含该视图
+        mutableContentViews = self.contentViews.mutableCopy;
+        [mutableContentViews removeObject:view];
+    } else {
+        if (isMain) {
+            // 替换主视图
+            [mutableContentViews addObject:view];
+            if (self.contentViews.count >= 2) {
+                // 之前存在辅助视图
+                [mutableContentViews addObject:self.contentViews.lastObject];
+            }
+        } else {
+            // 替换辅助视图
+            if (self.contentViews.count >= 2) {
+                // 之前存在辅助视图
+                [mutableContentViews addObject:self.contentViews.firstObject];
+                [mutableContentViews addObject:view];
+            } else {
+                // 之前不存在辅助视图
+                [mutableContentViews addObject:view];
+            }
+        }
+    }
     self.contentViews = mutableContentViews.copy;
     [self refrestCoverViews];
 }
@@ -103,22 +136,47 @@
     }
 }
 
-- (void)thirdTagGestureRecognizerAction:(UITapGestureRecognizer *)gestureRecognizer {
+- (void)rightEdgePanGestureRecognizerAction:(UIScreenEdgePanGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateRecognized) {
         if (self.contentViews.count > 0) {
             if(self.detailView.hidden) {
+                CGRect toFrame = CGRectMake(0, 0, CGRectGetWidth(UIScreen.mainScreen.bounds), CGRectGetHeight(UIScreen.mainScreen.bounds));
+                CGRect newFrame = CGRectMake(CGRectGetWidth(UIScreen.mainScreen.bounds) + 20, toFrame.origin.y, toFrame.size.width, toFrame.size.height);
+                self.detailView.frame = newFrame;
                 self.detailView.hidden = NO;
-                self.detailView.alpha = 0;
                 [UIView animateWithDuration:0.2 animations:^{
-                    self.detailView.alpha = 1;
+                    self.detailView.frame = toFrame;
                 }];
             } else {
                 [UIView animateWithDuration:0.2 animations:^{
-                    self.detailView.alpha = 0;
                 } completion:^(BOOL finished) {
                     self.detailView.hidden = YES;
                 }];
             }
+        }
+    }
+}
+
+- (void)detailViewPanGestureRecognizerAction:(UIPanGestureRecognizer *)gestureRecognizer {
+    CGFloat transX = [gestureRecognizer translationInView:self.view].x;
+
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        CGFloat x = transX;
+        if (transX > 0) {
+            self.detailView.frame = CGRectMake(x, 0, CGRectGetWidth(UIScreen.mainScreen.bounds), CGRectGetHeight(UIScreen.mainScreen.bounds));
+        }
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded || gestureRecognizer.state == UIGestureRecognizerStateCancelled) {
+        if (transX > CGRectGetWidth(self.detailView.contentRect) * 0.5) {
+            [UIView animateWithDuration:0.15 animations:^{
+                self.detailView.frame = CGRectMake(CGRectGetWidth(UIScreen.mainScreen.bounds) + 20, 0, CGRectGetWidth(UIScreen.mainScreen.bounds), CGRectGetHeight(UIScreen.mainScreen.bounds));
+            } completion:^(BOOL finished) {
+                self.detailView.hidden = YES;
+            }];
+        } else {
+            [UIView animateWithDuration:0.15 animations:^{
+                self.detailView.frame = UIScreen.mainScreen.bounds;
+            }];
         }
     }
 }
@@ -135,7 +193,6 @@
         _singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureRecognizerAction:)];
         _singleTapGestureRecognizer.numberOfTapsRequired = 1;
         [_singleTapGestureRecognizer requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
-        [_singleTapGestureRecognizer requireGestureRecognizerToFail:self.thirdTapGestureRecognizer];
     }
     return _singleTapGestureRecognizer;
 }
@@ -144,29 +201,35 @@
     if (!_doubleTapGestureRecognizer) {
         _doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapGestureRecognizerAction:)];
         _doubleTapGestureRecognizer.numberOfTapsRequired = 2;
-        [_doubleTapGestureRecognizer requireGestureRecognizerToFail:self.thirdTapGestureRecognizer];
     }
     return _doubleTapGestureRecognizer;
 }
 
--  (UITapGestureRecognizer *)thirdTapGestureRecognizer {
-    if (!_thirdTapGestureRecognizer) {
-        _thirdTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(thirdTagGestureRecognizerAction:)];
-        _thirdTapGestureRecognizer.numberOfTapsRequired = 3;
+- (UIScreenEdgePanGestureRecognizer *)rightEdgePanGestureRecognizer {
+    if (!_rightEdgePanGestureRecognizer) {
+        _rightEdgePanGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(rightEdgePanGestureRecognizerAction:)];
+        _rightEdgePanGestureRecognizer.edges = UIRectEdgeRight;
     }
-    return _thirdTapGestureRecognizer;
+    return _rightEdgePanGestureRecognizer;
+}
+
+
+- (UIPanGestureRecognizer *)detailViewPanGestureRecognizer {
+    if (!_detailViewPanGestureRecognizer) {
+        _detailViewPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(detailViewPanGestureRecognizerAction:)];
+    }
+    return _detailViewPanGestureRecognizer;
 }
 
 - (StaffDetailView *)detailView {
     if (!_detailView) {
         _detailView = [[StaffDetailView alloc] init];
-        _detailView.backgroundColor = [UIColor whiteColor];
-        _detailView.layer.cornerRadius = 4;
-        _detailView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.4].CGColor;
-        _detailView.layer.shadowOpacity = 0.5;
-        _detailView.layer.shadowRadius = 4;
-        _detailView.layer.shadowOffset = CGSizeMake(0, 0);
-        _detailView.clipsToBounds = false;
+        _detailView.backgroundColor = [UIColor clearColor];
+        __weak typeof(self)weakSelf = self;
+        [_detailView setDetailViewChooseCallback:^(UIView * _Nonnull view, BOOL isMain) {
+            [weakSelf showStaffItemViewOnView:view isMain:isMain];
+        }];
+
     }
     return _detailView;
 }

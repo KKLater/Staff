@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface StaffDetailView : UIView
 
 - (void)layoutViews:(NSArray <UIView *> *)views;
+@property (nonatomic, assign, readonly) CGRect contentRect;
+
+@property (nonatomic, copy) void(^detailViewChooseCallback)(UIView *view, BOOL isMain);
 
 @end
 
