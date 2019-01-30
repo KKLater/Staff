@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "Staff"
-    s.version      = "0.0.2"
+    s.version      = "0.0.3"
     s.summary      = "Staff creadted to verify UI layout"
     s.description  = <<-DESC
     Staff creadted to verify UI layout，
