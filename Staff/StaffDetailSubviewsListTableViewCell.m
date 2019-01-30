@@ -30,7 +30,7 @@
     [self.frameInfoLabel sizeToFit];
     [self.moreInfoLabel sizeToFit];
     self.classNameLabel.frame = CGRectMake(10, 10, CGRectGetWidth(self.contentView.bounds) - 20, CGRectGetHeight(self.classNameLabel.frame));
-    self.frameInfoLabel.frame = CGRectMake(10, 5 + CGRectGetHeight(self.classNameLabel.frame) + 3, CGRectGetWidth(self.frameInfoLabel.bounds), CGRectGetHeight(self.frameInfoLabel.bounds));
+    self.frameInfoLabel.frame = CGRectMake(10, 5 + CGRectGetHeight(self.classNameLabel.frame) + 5, CGRectGetWidth(self.frameInfoLabel.bounds), CGRectGetHeight(self.frameInfoLabel.bounds));
     self.moreInfoLabel.frame = CGRectMake(10, CGRectGetMaxY(self.frameInfoLabel.frame) + 3, CGRectGetWidth(self.moreInfoLabel.frame), CGRectGetHeight(self.moreInfoLabel.frame));
 }
 
