@@ -14,9 +14,12 @@
 1、修复 staff 关闭后，window 没有置空的bug
 
 **0.0.3 版本：**
-![image.png](https://upload-images.jianshu.io/upload_images/312211-402504eb1bdb0d74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310)
 1、增加右侧屏幕边缘划入手势，替代三次点击手势，显示详细视图
+
 2、详细视图增加主、辅视图的子视图列表，以帮助显示选择不易直接选择的视图
+
+![image.png](https://upload-images.jianshu.io/upload_images/312211-402504eb1bdb0d74.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/310)
+
 
 #### 应用场景
 这个主要应用场景，我大概想到两点：
